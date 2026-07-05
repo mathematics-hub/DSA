@@ -4,13 +4,13 @@ public:
         int n = nums.size();
         int result = 0;
         for (int bit_no = 0; bit_no < 32; bit_no++) {
-            int sum = 0;
+            int count = 0;
             for (int i = 0; i < n; i++) {
-                if (nums[i] & (1 << bit_no)) {
-                    sum++;
+                if ((nums[i] & (1 << bit_no))) {
+                    count++;
                 }
             }
-            if (sum % 3 != 0) {
+            if (count % 3 != 0) {
                 result = result | (1 << bit_no);
             }
         }
