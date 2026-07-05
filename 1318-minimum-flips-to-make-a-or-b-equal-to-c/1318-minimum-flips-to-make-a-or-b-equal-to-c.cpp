@@ -1,11 +1,11 @@
 class Solution {
 public:
     int minFlips(int a, int b, int c) {
-        int count = 0;
+        int count = 0, abit, bbit, cbit;
         while (a != 0 || b != 0 || c != 0) {
-            int abit = a & 1;
-            int bbit = b & 1;
-            int cbit = c & 1;
+            abit = a & 1;
+            bbit = b & 1;
+            cbit = c & 1;
             if (abit == 0 && bbit == 0 && cbit == 1) {
                 count++;
             } else if (abit == 1 && bbit == 1 && cbit == 0) {
