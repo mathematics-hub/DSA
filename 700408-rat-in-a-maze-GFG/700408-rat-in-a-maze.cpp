@@ -42,14 +42,14 @@ class Solution {
 	}
 	vector<string> ratInMaze(vector<vector<int>> & maze) {
 		// code here
+		if (maze[0][0] == 0) {
+			return {""};
+		}
 		int n = maze.size();
 		vector<vector<bool>> visit(n, vector<bool>(n, 0));
 		int i = 0, j = 0;
 		string path;
 		vector<string> ans;
-		if (maze[0][0] == 0) {
-			return ans;
-		}
 		visit[0][0] = 1;
 		mazepath(maze, i, j, n, path, visit, ans);
 		return ans;
