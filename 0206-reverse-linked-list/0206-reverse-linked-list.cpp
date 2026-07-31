@@ -10,17 +10,17 @@
  */
 class Solution {
 public:
-    ListNode* reverseList(ListNode* head) {
-        ListNode *cur = head, *pre = NULL;
-        while (cur != NULL) {
-            ListNode* temp = cur->next;
-            cur->next = pre;
-            pre = cur;
-            cur = temp;
+    ListNode* reverse(ListNode* cur, ListNode* pre) {
+        if (cur == NULL) {
+            return pre;
         }
-        head = pre;
-        return head;
+        ListNode* temp = cur->next;
+        cur->next = pre;
+        return reverse(temp, cur);
     }
+    ListNode* reverseList(ListNode* head) {
+         return reverse(head, NULL);
+      }
 };
 
 // Synced seamlessly with LeetHub Pro
