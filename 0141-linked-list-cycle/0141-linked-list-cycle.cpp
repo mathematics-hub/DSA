@@ -8,23 +8,14 @@
  */
 class Solution {
 public:
-    bool checked(vector<ListNode*> visited, ListNode* curr) {
-        for (auto val : visited) {
-            if (val == curr) {
-                return true;
-            }
-        }
-        return false;
-    }
     bool hasCycle(ListNode* head) {
-        ListNode* curr = head;
-        vector<ListNode*> visited;
-        while (curr != NULL) {
-            if (checked(visited, curr)) {
+        ListNode *slow = head, *fast = head;
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+            if (slow == fast) {
                 return true;
             }
-            visited.push_back(curr);
-            curr = curr->next;
         }
         return false;
     }
