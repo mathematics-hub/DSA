@@ -48,13 +48,13 @@ class Solution {
 		head2 = reverse(head2, NULL);
 		Node *head = addTwoNumbers(head1, head2);
 		head = reverse(head, NULL);
-		while (head->data == 0) {
-			if (head->next == NULL && head->data == 0) {
-				return head;
-			}
+		while (head != NULL && head->data == 0) {
 			Node* temp = head;
 			head = head->next;
 			delete temp;
+		}
+		if (head == NULL) {
+			return new Node(0);
 		}
 		return head;
 	}
