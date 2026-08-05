@@ -19,7 +19,7 @@ class Solution {
 		while (curr != NULL) {
 			if (visited[curr->next] == 1) {
 				curr->next = NULL;
-				break;
+			//	break;
 			}
 			visited[curr] = 1;
 			curr = curr->next;
