@@ -23,8 +23,7 @@ class Solution {
 	}
 	Node* reverseList(Node* head) {
 		// code here
-		head = reverse(head, NULL);
-		return head;
+		return reverse(head, NULL);
 	}
 };
 
