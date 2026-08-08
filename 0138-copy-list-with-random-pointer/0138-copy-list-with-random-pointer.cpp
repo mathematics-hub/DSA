@@ -16,7 +16,21 @@ public:
 
 class Solution {
 public:
+    void merge(Node* head1, Node* head2) {
+        while (head2) {
+            Node* ptr1 = head1->next;
+            Node* ptr2 = head2->next;
+            head2->next = head1->next;
+            head1->next = head2;
+            head1 = ptr1;
+            head2 = ptr2;
+        }
+    }
     Node* copyRandomList(Node* head) {
+        if (head == NULL) {
+            return NULL;
+        }
+        // Step 1: Create copy list
         Node* headcopy = new Node(0);
         Node* tailcopy = headcopy;
         Node* temp = head;
@@ -29,20 +43,30 @@ public:
         headcopy = headcopy->next;
         delete ptr;
 
+        // Step 2: merge original and copied nodes
         temp = head;
         tailcopy = headcopy;
-        unordered_map<Node*, Node*> store;
+        merge(temp, tailcopy);
+
+        // Step 3: Assign random pointers
+        temp = head;
         while (temp) {
-            store[temp] = tailcopy;
-            temp = temp->next;
-            tailcopy = tailcopy->next;
+            Node* copy = temp->next;
+            if (temp->random)
+                copy->random = temp->random->next;
+            else
+                copy->random = NULL;
+            temp = copy->next;
         }
 
+        // Step 4: Separate the two lists
         temp = head;
-        tailcopy = headcopy;
+        headcopy = head->next;
         while (temp) {
-            tailcopy->random = store[temp->random];
-            tailcopy = tailcopy->next;
+            Node* copy = temp->next;
+            temp->next = copy->next;
+            if (copy->next)
+                copy->next = copy->next->next;
             temp = temp->next;
         }
         return headcopy;
