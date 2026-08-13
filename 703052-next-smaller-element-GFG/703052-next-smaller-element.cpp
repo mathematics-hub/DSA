@@ -2,18 +2,18 @@ class Solution {
 	public:
 	vector<int> nextSmallerEle(vector<int>& arr) {
 		//  code here
-		stack<int> storeindex;
+		stack<int> temp;
 		vector<int> ans(arr.size(), -1);
 		for (int i = 0; i<arr.size(); i++) {
-			if (storeindex.empty()) {
-				storeindex.push(i);
+			if (temp.empty()) {
+				temp.push(i);
 			}
 			else {
-				while (!storeindex.empty() && arr[storeindex.top()]>arr[i]) {
-					ans[storeindex.top()] = arr[i];
-					storeindex.pop();
+				while (!temp.empty() && arr[temp.top()]>arr[i]) {
+					ans[temp.top()] = arr[i];
+					temp.pop();
 				}
-				storeindex.push(i);
+				temp.push(i);
 			}
 		}
 		return ans;
