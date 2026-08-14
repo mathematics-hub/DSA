@@ -36,16 +36,19 @@ class Solution {
 				break;
 			}
 		}
+		if (flag == false) {
+			return - 1;
+		}
 		for (int i = 0; i<n; i++) {
 			if (mat[i][index] == 0) {
 				flag = false;
 				break;
 			}
 		}
-		if (flag == true) {
-			return index;
+		if (flag == false) {
+			return - 1;
 		}
-		return - 1;
+		return index;
 	}
 };
 
