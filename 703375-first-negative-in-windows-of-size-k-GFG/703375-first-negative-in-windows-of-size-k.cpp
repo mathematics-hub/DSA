@@ -18,12 +18,7 @@ class Solution {
 				neg.push(arr[i]);
 			}
 			all.push(arr[i]);
-			if (neg.empty()) {
-				ans.push_back(0);
-			}
-			else {
-				ans.push_back(neg.front());
-			}
+			ans.push_back(neg.empty()?0:neg.front());
 			if (!neg.empty() && all.front() == neg.front()) {
 				neg.pop();
 			}
