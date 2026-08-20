@@ -2,12 +2,19 @@ class Solution {
 	public:
 	int firstIndex(vector<int> &arr) {
 		// code here
-		for (int i = 0; i<arr.size(); i++) {
-			if (arr[i] == 1) {
-				return i;
+		int start = 0, end = arr.size() - 1;
+		int index = -1;
+		while (start <= end) {
+			int mid = (start + end)/2;
+			if (arr[mid] == 1) {
+				index = mid;
+				end = mid - 1;
+			}
+			else {
+				start = mid + 1;
 			}
 		}
-		return - 1;
+		return index;
 	}
 };
 
