@@ -14,15 +14,29 @@ class Node {
 
 class Solution {
 	public:
+	void countnonleafnode(Node *root, int &count) {
+		if (!root) {
+			return;
+		}
+		if (root->left != NULL || root->right != NULL) {
+			count++;
+		}
+		countnonleafnode(root->left, count);
+		countnonleafnode(root->right, count);
+	}
 	int countNonLeafNodes(Node* root) {
 		// Code here
-		if (root == NULL) {
+		int count = 0;
+		countnonleafnode(root, count);
+		return count;
+		/*		if (root == NULL) {
 			return 0;
 		}
 		if (!root->left && !root->right) {
 			return 0;
 		}
 		return countNonLeafNodes(root->left) + countNonLeafNodes(root->right) + 1;
+		*/
 	}
 };
 
