@@ -14,23 +14,18 @@ class Node {
 
 class Solution {
 	public:
-	void innernode(Node *root, int &count) {
-		if (!root) {
-			return;
-		}
-		if (root->left != NULL || root->right != NULL) {
-			count++;
-		}
-		innernode(root->left, count);
-		innernode(root->right, count);
-	}
 	int countNonLeafNodes(Node* root) {
 		// Code here
-		int count = 0;
-		innernode(root, count);
-		return count;
+		if (root == NULL) {
+			return 0;
+		}
+		if (!root->left && !root->right) {
+			return 0;
+		}
+		return countNonLeafNodes(root->left) + countNonLeafNodes(root->right) + 1;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
