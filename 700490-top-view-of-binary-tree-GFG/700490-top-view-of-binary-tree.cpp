@@ -24,34 +24,25 @@ class Solution {
 		position(root->left, curr - 1, l, r);
 		position(root->right, curr + 1, l, r);
 	}
+	void topViewOfTree(Node *root, int level, int index, vector<int> &lev, vector<int> &ans) {
+		if (root == NULL) {
+			return;
+		}
+		if (lev[index] >level) {
+			lev[index] = level;
+			ans[index] = root->data;
+		}
+		topViewOfTree(root->left, level + 1, index - 1, lev, ans);
+		topViewOfTree(root->right, level + 1, index + 1, lev, ans);
+	}
 	vector<int> topView(Node *root) {
 		// code here
 		int curr = 0, l = 0, r = 0;
 		position(root, curr, l, r);
 		vector<int> ans(r - l + 1);
-		vector<bool> track(r - l + 1, false);
-		queue<Node *>q;
-		queue<int> index;
-		q.push(root);
-		index.push(-l);
-		while (!q.empty()) {
-			Node *temp = q.front();
-			q.pop();
-			int i = index.front();
-			index.pop();
-			if (track[i] == 0) {
-				track[i] = 1;
-				ans[i] = temp->data;
-			}
-			if (temp->left) {
-				q.push(temp->left);
-				index.push(i - 1);
-			}
-			if (temp->right) {
-				q.push(temp->right);
-				index.push(i + 1);
-			}
-		}
+		vector<int> lev(r - l + 1, INT_MAX);
+		int index = -l, level = 0;
+		topViewOfTree(root, level, index, lev, ans);
 		return ans;
 	}
 };
