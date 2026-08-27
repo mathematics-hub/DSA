@@ -35,24 +35,21 @@ class Solution {
 		q.push(root);
 		index.push(-l);
 		while (!q.empty()) {
-			int n = q.size();
-			while (n--) {
-				Node *temp = q.front();
-				q.pop();
-				int i = index.front();
-				index.pop();
-				if (track[i] == 0) {
-					track[i] = 1;
-					ans[i] = temp->data;
-				}
-				if (temp->left) {
-					q.push(temp->left);
-					index.push(i - 1);
-				}
-				if (temp->right) {
-					q.push(temp->right);
-					index.push(i + 1);
-				}
+			Node *temp = q.front();
+			q.pop();
+			int i = index.front();
+			index.pop();
+			if (track[i] == 0) {
+				track[i] = 1;
+				ans[i] = temp->data;
+			}
+			if (temp->left) {
+				q.push(temp->left);
+				index.push(i - 1);
+			}
+			if (temp->right) {
+				q.push(temp->right);
+				index.push(i + 1);
 			}
 		}
 		return ans;
