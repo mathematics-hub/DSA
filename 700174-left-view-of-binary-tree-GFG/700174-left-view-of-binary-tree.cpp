@@ -13,27 +13,30 @@ class Node {
 
 class Solution {
 	public:
+	int totalNoOfLevel(Node *root) {
+		if (root == NULL) {
+			return 0;
+		}
+		return 1 + max(totalNoOfLevel(root->left), totalNoOfLevel(root->right));
+	}
+	void Lview(Node *root, int level, vector<bool> &track, vector<int> &ans) {
+		if (root == NULL) {
+			return;
+		}
+		if (track[level] == false) {
+			ans[level] = root->data;
+			track[level] = true;
+		}
+		Lview(root->left, level + 1, track, ans);
+		Lview(root->right, level + 1, track, ans);
+	}
 	vector<int> leftView(Node *root) {
 		// code here
-		queue<Node *> q;
-		vector<int> ans;
-		if (root != NULL) {
-			q.push(root);
-		}
-		while (!q.empty()) {
-			int n = q.size();
-			ans.push_back(q.front()->data);
-			while (n--) {
-				Node *temp = q.front();
-				q.pop();
-				if (temp->left) {
-					q.push(temp->left);
-				}
-				if (temp->right) {
-					q.push(temp->right);
-				}
-			}
-		}
+		int lev = totalNoOfLevel(root);
+		vector<bool> track(lev, false);
+		vector<int> ans(lev);
+		int level = 0;
+		Lview(root, level, track, ans);
 		return ans;
 	}
 };
