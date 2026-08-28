@@ -20,15 +20,15 @@ public:
         }
         while (!q.empty()) {
             int n = q.size();
-            ans.push_back(q.back()->val);
+            ans.push_back(q.front()->val);
             while (n--) {
                 TreeNode* temp = q.front();
                 q.pop();
-                if (temp->left) {
-                    q.push(temp->left);
-                }
                 if (temp->right) {
                     q.push(temp->right);
+                }
+                if (temp->left) {
+                    q.push(temp->left);
                 }
             }
         }
