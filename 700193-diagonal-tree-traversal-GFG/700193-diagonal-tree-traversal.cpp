@@ -25,9 +25,9 @@ class Solution {
 	}
 	vector<int> diagonal(Node *root) {
 		// code here
-		int l = 1;
-		noOfDiagonal(root, 1, l);
-		vector<vector<int>> ans(l);
+		int l = 0;
+		noOfDiagonal(root, 0, l);
+		vector<vector<int>> ans(l + 1);
 		diagonaltraversal(root, 0, ans);
 		vector<int> result;
 		for (int i = 0; i<ans.size(); i++) {
