@@ -13,54 +13,39 @@ class Node {
 
 class Solution {
 	public:
-	void path(Node *root, int target, bool &find, vector<int> &ans) {
+	int height(Node *root) {
 		if (root == NULL) {
-			return;
-		}
-		ans.push_back(root->data);
-		if (root->data == target) {
-			find = true;
-			return;
-		}
-		path(root->left, target, find, ans);
-		if (!find) {
-			path(root->right, target, find, ans);
-		}
-		if (!find) {
-			ans.pop_back();
-		}
-	}
-	int height(Node *root)
-	{
-		if (root == nullptr)
-			{
 			return 0;
 		}
 		return 1 + max(height(root->left), height(root->right));
 	}
+	int burn(Node* root, int target, int &time, int &hei) {
+		// code here
+		if (root == NULL) {
+			return 0;
+		}
+		if (root->data == target) {
+			hei = height(root) - 1;
+			return - 1;
+		}
+		int l = burn(root->left, target, time, hei);
+		int r = burn(root->right, target, time, hei);
+		if (l<0) {
+			time = max(time, r - l);
+			return l - 1;
+		}
+		if (r<0) {
+			time = max(time, l - r);
+			return r - 1;
+		}
+		return 1 + max(l, r);
+	}
 	int minTime(Node* root, int target) {
 		// code here
-		bool find = false;
-		vector<int> ans;
-		path(root, target, find, ans);
-		int n = ans.size();
-		int maxtime = 0;
-		int i = 0;
-		while (i<n) {
-			if (root->data == target) {
-				maxtime = max(maxtime, height(root) - 1);
-			}
-			else if (root->left != NULL && root->left->data == ans[i + 1]) {
-				maxtime = max(maxtime, height(root->right) + n - 1-i);
-				root = root->left;
-			}
-			else {
-				maxtime = max(maxtime, height(root->left) + n - 1-i);
-				root = root->right;
-			}
-			i++;
-		}
-		return maxtime;
+		int time = 0;
+		int hei = 0;
+		burn(root, target, time, hei);
+		return max(time, hei);
 	}
 };
 
