@@ -50,7 +50,7 @@ class Solution {
 			if (root->data == target) {
 				maxtime = max(maxtime, height(root) - 1);
 			}
-			if (root->left != NULL && root->left->data == ans[i + 1]) {
+			else if (root->left != NULL && root->left->data == ans[i + 1]) {
 				maxtime = max(maxtime, height(root->right) + n - 1-i);
 				root = root->left;
 			}
