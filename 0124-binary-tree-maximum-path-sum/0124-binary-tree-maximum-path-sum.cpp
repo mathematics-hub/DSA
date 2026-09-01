@@ -12,29 +12,19 @@
  */
 class Solution {
 public:
-    int maxSum(TreeNode* root) {
+    int maxSum(TreeNode* root, int& sum) {
         if (root == NULL) {
             return 0;
         }
-        int l = maxSum(root->left);
-        int r = maxSum(root->right);
-        int sum = root->val + max(l, r);
-        return sum >= 0 ? sum : 0;
-    }
-    void nodeWithTwoChild(TreeNode* root, int& sum) {
-        if (root == NULL) {
-            return;
-        }
-        int leftPath = maxSum(root->left);
-        int rightPath = maxSum(root->right);
-        sum = max(sum, root->val + leftPath + rightPath);
-
-        nodeWithTwoChild(root->left, sum);
-        nodeWithTwoChild(root->right, sum);
+        int leftSum = maxSum(root->left, sum);
+        int rightSum = maxSum(root->right, sum);
+        sum = max(sum, root->val + leftSum + rightSum);
+        int rtn = root->val + max(leftSum, rightSum);
+        return rtn > 0 ? rtn : 0;
     }
     int maxPathSum(TreeNode* root) {
         int sum = INT_MIN;
-        nodeWithTwoChild(root, sum);
+        maxSum(root, sum);
         return sum;
     }
 };
