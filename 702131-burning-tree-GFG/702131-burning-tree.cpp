@@ -19,33 +19,40 @@ class Solution {
 		}
 		return 1 + max(height(root->left), height(root->right));
 	}
-	int burn(Node* root, int target, int &time, int &hei) {
-		// code here
+	bool findpath(Node *root, int target, vector<int> &path) {
 		if (root == NULL) {
-			return 0;
+			return false;
 		}
+		path.push_back(root->data);
 		if (root->data == target) {
-			hei = height(root) - 1;
-			return - 1;
+			return true;
 		}
-		int l = burn(root->left, target, time, hei);
-		int r = burn(root->right, target, time, hei);
-		if (l<0) {
-			time = max(time, r - l);
-			return l - 1;
+		if (findpath(root->left, target, path) || findpath(root->right, target, path)) {
+			return true;
 		}
-		if (r<0) {
-			time = max(time, l - r);
-			return r - 1;
-		}
-		return 1 + max(l, r);
+		path.pop_back();
+		return false;
 	}
 	int minTime(Node* root, int target) {
 		// code here
-		int time = 0;
-		int hei = 0;
-		burn(root, target, time, hei);
-		return max(time, hei);
+		vector<int> path;
+		findpath(root, target, path);
+		int n = path.size();
+		int maxtime = INT_MIN;
+		for (int i = 0; i<n; i++) {
+			if (root->data == target) {
+				maxtime = max(maxtime, height(root) - 1);
+			}
+			else if (root->left != NULL && root->left->data == path[i + 1]) {
+				maxtime = max(maxtime, height(root->right) + n - 1-i);
+				root = root->left;
+			}
+			else {
+				maxtime = max(maxtime, height(root->left) + n - 1-i);
+				root = root->right;
+			}
+		}
+		return maxtime;
 	}
 };
 
