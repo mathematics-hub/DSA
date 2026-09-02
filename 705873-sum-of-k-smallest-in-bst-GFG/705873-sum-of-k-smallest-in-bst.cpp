@@ -12,25 +12,28 @@ class Node {
 
 class Solution {
 	public:
-	void traverse(Node *root, vector<int> &ans) {
+	void traverse(Node *root, int &k, int &sum) {
 		if (root == NULL) {
 			return;
 		}
-		traverse(root->left, ans);
-		ans.push_back(root->data);
-		traverse(root->right, ans);
+		traverse(root->left, k, sum);
+		if (k>0) {
+			sum += (root->data);
+		}
+		k = k - 1;
+		if (k<=0) {
+			return ;
+		}
+		traverse(root->right, k, sum);
 	}
 	int sum(Node* root, int k) {
 		// code here
-		vector<int> ans;
-		traverse(root, ans);
 		int sum = 0;
-		for (int i = 0; i < k; i++) {
-			sum += ans[i];
-		}
+		traverse(root, k, sum);
 		return sum;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
