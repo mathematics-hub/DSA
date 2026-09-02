@@ -13,43 +13,26 @@ class Node {
 
 class Solution {
 	public:
+	bool BST(Node* root, int& prev) {
+		if (root == NULL) {
+			return true;
+		}
+		bool left = BST(root->left, prev);
+		if (left == false) {
+			return false;
+		}
+		if (prev >= root->data) {
+			return false;
+		}
+		prev = root->data;
+		return BST(root->right, prev);
+	}
 	bool isBST(Node* root) {
 		// code here
-		int prevnode;
-		int currnode = INT_MIN;
-		while (root) {
-			if (root->left == NULL) {
-				prevnode = currnode;
-				currnode = root->data;
-				if (currnode <= prevnode) {
-					return false;
-				}
-				root = root->right;
-			}
-			else {
-				Node *curr = root->left;
-				while (curr->right != NULL && curr->right != root) {
-					curr = curr->right;
-				}
-				if (curr->right == NULL) {
-					curr->right = root;
-					root = root->left;
-				}
-				else {
-					curr->right = NULL;
-					prevnode = currnode;
-					currnode = root->data;
-					if (currnode <= prevnode) {
-						return false;
-					}
-					root = root->right;
-				}
-			}
-		}
-		return true;
+		int prevnode = INT_MIN; ;
+		return BST(root, prevnode);
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
