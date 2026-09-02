@@ -15,10 +15,15 @@ class Solution {
 	public:
 	bool isBST(Node* root) {
 		// code here
-		vector<int> inorder;
+		int prevnode;
+		int currnode = INT_MIN;
 		while (root) {
 			if (root->left == NULL) {
-				inorder.push_back(root->data);
+				prevnode = currnode;
+				currnode = root->data;
+				if (currnode <= prevnode) {
+					return false;
+				}
 				root = root->right;
 			}
 			else {
@@ -32,14 +37,13 @@ class Solution {
 				}
 				else {
 					curr->right = NULL;
-					inorder.push_back(root->data);
+					prevnode = currnode;
+					currnode = root->data;
+					if (currnode <= prevnode) {
+						return false;
+					}
 					root = root->right;
 				}
-			}
-		}
-		for (int i = 0; i<inorder.size() - 1; i++) {
-			if (inorder[i] >= inorder[i + 1]) {
-				return false;
 			}
 		}
 		return true;
