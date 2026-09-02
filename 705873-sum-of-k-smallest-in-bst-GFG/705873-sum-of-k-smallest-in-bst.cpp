@@ -21,7 +21,7 @@ class Solution {
 			sum += (root->data);
 		}
 		k = k - 1;
-		if (k<=0) {
+		if (k <= 0) {
 			return ;
 		}
 		traverse(root->right, k, sum);
