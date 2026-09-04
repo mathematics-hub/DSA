@@ -12,53 +12,46 @@
  */
 class Solution {
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
-        vector<vector<int>> ans;
-        vector<int> subans;
+    int height(TreeNode* root) {
         if (root == NULL) {
-            return ans;
+            return 0;
         }
-        queue<TreeNode*> q;
-        q.push(root);
-        q.push(NULL);
-        bool dir = 1;
-        while (q.size() != 1) {
-            if (q.front() != NULL) {
-                TreeNode* temp = q.front();
-                subans.push_back(temp->val);
-                if (dir) {
-                    if (temp->left) {
-                        q.push(temp->left);
-                    }
-                    if (temp->right) {
-                        q.push(temp->right);
-                    }
-                } else {
-                    if (temp->right) {
-                        q.push(temp->right);
-                    }
-                    if (temp->left) {
-                        q.push(temp->left);
-                    }
+        return 1 + max(height(root->left), height(root->right));
+    }
+    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {
+        vector<vector<int>> ans(height(root));
+        stack<TreeNode*> st1;
+        stack<TreeNode*> st2;
+        int i = 0;
+        if (root != NULL) {
+            st1.push(root);
+        }
+        while (!st1.empty() || !st2.empty()) {
+            while (!st1.empty()) {
+                TreeNode* temp = st1.top();
+                st1.pop();
+                ans[i].push_back(temp->val);
+                if (temp->left) {
+                    st2.push(temp->left);
                 }
-                q.pop();
+                if (temp->right) {
+                    st2.push(temp->right);
+                }
             }
-            if (q.front() == NULL) {
-                ans.push_back(subans);
-                subans.clear();
-                // q.pop();
-                stack<TreeNode*> st;
-                while (!q.empty()) {
-                    st.push(q.front());
-                    q.pop();
+            i++;
+
+            while (!st2.empty()) {
+                TreeNode* temp = st2.top();
+                st2.pop();
+                ans[i].push_back(temp->val);
+                if (temp->right) {
+                    st1.push(temp->right);
                 }
-                while (!st.empty()) {
-                    q.push(st.top());
-                    st.pop();
+                if (temp->left) {
+                    st1.push(temp->left);
                 }
-                // q.push(NULL);
-                dir = dir ? 0 : 1;
             }
+            i++;
         }
         return ans;
     }
