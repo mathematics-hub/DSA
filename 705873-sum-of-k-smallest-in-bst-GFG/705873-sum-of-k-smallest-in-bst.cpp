@@ -19,8 +19,8 @@ class Solution {
 		traverse(root->left, k, sum);
 		if (k>0) {
 			sum += root->data;
+			k--;
 		}
-		k--;
 		if (k <= 0) {
 			return ;
 		}
