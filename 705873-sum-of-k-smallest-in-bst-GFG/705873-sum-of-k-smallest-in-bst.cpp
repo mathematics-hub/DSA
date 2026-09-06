@@ -14,14 +14,16 @@ class Solution {
 	public:
 	void traverse(Node *root, int &k, int &sum) {
 		if (root == NULL) {
-			return;
+			return ;
 		}
 		traverse(root->left, k, sum);
+		if (k>0) {
+			sum += root->data;
+		}
+		k--;
 		if (k <= 0) {
 			return ;
 		}
-		sum += (root->data);
-		k = k - 1;
 		traverse(root->right, k, sum);
 	}
 	int sum(Node* root, int k) {
@@ -31,6 +33,7 @@ class Solution {
 		return sum;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
