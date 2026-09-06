@@ -15,17 +15,18 @@ class Solution {
 	public:
 	bool search(Node* root, int key) {
 		// code here
-		if (root == NULL) {
-			return false;
+		while (root) {
+			if (root->data == key) {
+				return true;
+			}
+			else if (key<root->data) {
+				root = root->left;
+			}
+			else {
+				root = root->right;
+			}
 		}
-		if (root->data == key) {
-			return true;
-		}
-		if (key<root->data) {
-			return search(root->left, key);
-		} else {
-			return search(root->right, key);
-		}
+		return false;
 	}
 };
 
