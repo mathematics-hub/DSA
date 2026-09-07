@@ -15,22 +15,22 @@ class Solution {
 	public:
 	bool deadend(Node *root, int minval, int maxval) {
 		if (root == NULL) {
-			return true;
+			return false;
 		}
 		if (root->left == NULL && root->right == NULL) {
 			if (root->data - minval == 1 && maxval - root->data == 1) {
-				return false;
+				return true;
 			}
 			else {
-				return true;
+				return false;
 			}
 		}
 		int val = root->data;
-		return	deadend(root->left, minval, val) && deadend(root->right, val, maxval);
+		return	deadend(root->left, minval, val) || deadend(root->right, val, maxval);
 	}
 	bool isDeadEnd(Node *root) {
 		// Code here
-		return	!deadend(root, 0, 100000);
+		return	deadend(root, 0, 100000);
 	}
 };
 
