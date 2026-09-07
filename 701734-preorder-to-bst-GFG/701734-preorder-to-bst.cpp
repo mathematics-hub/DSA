@@ -14,12 +14,14 @@ class Node {
 class Solution {
 	public:
 	Node *BST(vector<int> &preorder, int &index, int lower, int upper) {
-		if (index == preorder.size() || preorder[index]<lower || preorder[index]>upper) {
+		if (index == preorder.size()) {
 			return NULL;
 		}
 		Node *temp = new Node(preorder[index++]);
-		temp->left = BST(preorder, index, lower, temp->data);
-		temp->right = BST(preorder, index, temp->data, upper);
+		if (lower<preorder[index] && preorder[index]<temp->data)
+			temp->left = BST(preorder, index, lower, temp->data);
+		if (temp->data<preorder[index] && preorder[index]<upper)
+			temp->right = BST(preorder, index, temp->data, upper);
 		return temp;
 	}
 	Node* preToBST(vector<int>& pre) {
