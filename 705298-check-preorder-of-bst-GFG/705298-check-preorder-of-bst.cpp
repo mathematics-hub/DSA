@@ -1,41 +1,25 @@
-class Node {
-	public:
-	int data;
-	Node *left, *right;
-	Node(int value) {
-		data = value;
-		left = right = NULL;
-	}
-};
 class Solution {
 	public:
-	Node * BST(vector<int> &arr, int &index, int lower, int upper) {
-		if (index == arr.size() || arr[index]>upper || arr[index]<lower) {
-			return NULL;
+	void checkBST(vector<int> &arr, int &index, int minval, int maxval) {
+		if (index == arr.size()) {
+			return;
 		}
-		Node *temp = new Node(arr[index++]);
-		temp->left = BST(arr, index, lower, temp->data);
-		temp->right = BST(arr, index, temp->data, upper);
-		return temp;
-	}
-	bool check(Node *root, vector<int> &arr, int &index) {
-		if (root == NULL) {
-			return true;
+		int val = arr[index++];
+		if (arr[index]>minval && arr[index]<val) {
+			checkBST(arr, index, minval, val);
 		}
-		if (root->data != arr[index++]) {
-			return false;
+		if (val<arr[index] && arr[index]<maxval) {
+			checkBST(arr, index, val, maxval);
 		}
-		return check(root->left, arr, index) && check(root->right, arr, index);
 	}
 	bool canRepresentBST(vector<int> &arr) {
 		// code here
-		int index = 0;
-		Node *root = BST(arr, index, INT_MIN, INT_MAX);
-		if (index != arr.size()) {
+		int index = 0, minval = INT_MIN, maxval = INT_MAX;
+		checkBST(arr, index, minval, maxval);
+		if (index<arr.size()) {
 			return false;
 		}
-		index = 0;
-		return check(root, arr, index);
+		return true;
 	}
 };
 
