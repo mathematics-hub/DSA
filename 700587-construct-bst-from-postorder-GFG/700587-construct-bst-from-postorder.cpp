@@ -13,25 +13,23 @@ class Node {
 
 class Solution {
 	public:
-	Node *BST(Node *root, int val) {
-		if (root == NULL) {
-			return new Node(val);
+	Node *BST(vector<int> &post, int &index, int minval, int maxval) {
+		if (index == -1) {
+			return NULL;
 		}
-		if (val<root->data) {
-			root->left = BST(root->left, val);
+		Node *temp = new Node(post[index--]);
+		if (temp->data<post[index] && post[index]<maxval) {
+			temp->right = BST(post, index, temp->data, maxval);
 		}
-		else {
-			root->right = BST(root->right, val);
+		if (minval<post[index] && post[index]<temp->data) {
+			temp->left = BST(post, index, minval, temp->data);
 		}
-		return root;
+		return temp;
 	}
 	Node* constructTree(vector<int>& post) {
 		// code here
-		Node *root = NULL;
-		for (int i = post.size() - 1; i >= 0; i--) {
-			root = BST(root, post[i]);
-		}
-		return root;
+		int index = post.size() - 1, minval = INT_MIN, maxval = INT_MAX;
+		return BST(post, index, minval, maxval);
 	}
 };
 
