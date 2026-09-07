@@ -15,11 +15,17 @@ class Solution {
 		if (root == NULL) {
 			return;
 		}
-		traverse(root->left, low, high, ans);
-		if (low<=root->data && root->data <= high) {
-			ans.push_back(root->data);
+		if (root->data>high) {
+			traverse(root->left, low, high, ans);
 		}
-		traverse(root->right, low, high, ans);
+		else if (root->data<low) {
+			traverse(root->right, low, high, ans);
+		}
+		else {
+			traverse(root->left, low, high, ans);
+			ans.push_back(root->data);
+			traverse(root->right, low, high, ans);
+		}
 	}
 	vector<int> nodesInRange(Node *root, int low, int high) {
 		// code here
