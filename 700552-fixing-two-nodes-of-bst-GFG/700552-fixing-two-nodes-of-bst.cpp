@@ -22,24 +22,12 @@ class Solution {
 		inorder(root->right, ans);
 	}
 	void fixing(Node *root, vector<int> &ans, int &index) {
-		stack<Node *> st;
-		while (root) {
-			st.push(root);
-			root = root->left;
+		if (root == NULL) {
+			return ;
 		}
-		while (!st.empty()) {
-			Node *temp = st.top();
-			st.pop();
-			if (temp->data != ans[index]) {
-				temp->data = ans[index];
-			}
-			index++;
-			root = temp->right;
-			while (root) {
-				st.push(root);
-				root = root->left;
-			}
-		}
+		fixing(root->left, ans, index);
+		root->data = ans[index++];
+		fixing(root->right, ans, index);
 	}
 	Node* correctBST(Node* root) {
 		// code here
