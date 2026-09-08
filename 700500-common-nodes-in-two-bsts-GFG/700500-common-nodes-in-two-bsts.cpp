@@ -13,34 +13,46 @@ class Node {
 
 class Solution {
 	public:
-	void inorder(Node *root, vector<int> &ans) {
-		if (root == NULL) {
-			return;
-		}
-		inorder(root->left, ans);
-		ans.push_back(root->data);
-		inorder(root->right, ans);
-	}
 	vector<int> findCommon(Node* r1, Node* r2) {
 		// code here
-		vector<int> v1, v2;
-		inorder(r1, v1);
-		inorder(r2, v2);
-		vector<int> result;
-		int i = 0, j = 0;
-		while (i<v1.size() && j<v2.size()) {
-			if (v1[i]<v2[j]) {
-				i++;
+		vector<int> ans;
+		stack<Node *> st1, st2;
+		while (r1) {
+			st1.push(r1);
+			r1 = r1->left;
+		}
+		while (r2) {
+			st2.push(r2);
+			r2 = r2->left;
+		}
+		while (!st1.empty() && !st2.empty()) {
+			Node *temp1 = st1.top();
+			Node *temp2 = st2.top();
+			if (temp1->data<temp2->data) {
+				st1.pop();
+				r1 = temp1->right;
 			}
-			else if (v1[i]>v2[j]) {
-				j++;
+			else if (temp1->data>temp2->data) {
+				st2.pop();
+				r2 = temp2->right;
 			}
 			else {
-				result.push_back(v1[i]);
-				i++; j++;
+				ans.push_back(temp1->data);
+				st1.pop();
+				st2.pop();
+				r1 = temp1->right;
+				r2 = temp2->right;
+			}
+			while (r1) {
+				st1.push(r1);
+				r1 = r1->left;
+			}
+			while (r2) {
+				st2.push(r2);
+				r2 = r2->left;
 			}
 		}
-		return result;
+		return ans;
 	}
 };
 
