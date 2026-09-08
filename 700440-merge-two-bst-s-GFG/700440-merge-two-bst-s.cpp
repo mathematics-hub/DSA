@@ -29,7 +29,7 @@ class Solution {
 		while (!st1.empty() && !st2.empty()) {
 			Node *temp1 = st1.top();
 			Node *temp2 = st2.top();
-			if (temp1->data<temp2->data) {
+			if (temp1->data<=temp2->data) {
 				ans.push_back(temp1->data);
 				st1.pop();
 				r1 = temp1->right;
@@ -37,14 +37,6 @@ class Solution {
 			else if (temp1->data>temp2->data) {
 				ans.push_back(temp2->data);
 				st2.pop();
-				r2 = temp2->right;
-			}
-			else {
-				ans.push_back(temp1->data);
-				ans.push_back(temp2->data);
-				st1.pop();
-				st2.pop();
-				r1 = temp1->right;
 				r2 = temp2->right;
 			}
 			while (r1) {
