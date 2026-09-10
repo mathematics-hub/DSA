@@ -13,38 +13,52 @@ class Node {
 
 class Solution {
 	public:
-	void inorder(Node *root, vector<int> &ans) {
-		if (root == NULL) {
-			return;
-		}
-		inorder(root->left, ans);
-		ans.push_back(root->data);
-		inorder(root->right, ans);
-	}
-	void fixing(Node *root, vector<int> &ans, int &index) {
-		if (root == NULL) {
-			return ;
-		}
-		fixing(root->left, ans, index);
-		root->data = ans[index++];
-		fixing(root->right, ans, index);
-	}
 	Node* correctBST(Node* root) {
-		// code here
-		vector<int> ans;
-		inorder(root, ans);
-		bool getans = false;
-		int i = 0;
-		while (ans[i]<ans[i + 1]) {
-			i++;
+		Node *first = NULL, *second = NULL;
+		Node *prev = NULL, *curr = root;
+		while (curr) {
+			if (curr->left == NULL) {
+				// get number
+				if (prev != NULL && prev->data>curr->data) {
+					if (first == NULL) {
+						first = prev;
+						second = curr;
+					}
+					else {
+						second = curr;
+					}
+				}
+				prev = curr;
+				curr = curr->right;
+			}
+			else {
+				Node *temp = curr->left;
+				// move rightmost element of left element
+				while (temp->right != NULL && temp->right != curr) {
+					temp = temp->right;
+				}
+				if (temp->right == NULL) {
+					temp->right = curr;
+					curr = curr->left;
+				}
+				else {
+					temp->right = NULL;
+					// get element
+					if (prev != NULL && prev->data>curr->data) {
+						if (first == NULL) {
+							first = prev;
+							second = curr;
+						}
+						else {
+							second = curr;
+						}
+					}
+					prev = curr;
+					curr = curr->right;
+				}
+			}
 		}
-		int j = ans.size() - 1;
-		while (ans[j - 1]<ans[j]) {
-			j--;
-		}
-		swap(ans[i], ans[j]);
-		int index = 0;
-		fixing(root, ans, index);
+		swap(first->data, second->data);
 		return root;
 	}
 };
