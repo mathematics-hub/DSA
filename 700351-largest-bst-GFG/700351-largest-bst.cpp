@@ -24,9 +24,9 @@ class Solution {
 		result lchild = find(root->left);
 		result rchild = find(root->right);
 		if (lchild.isBst && rchild.isBst && lchild.maxval<root->data && root->data<rchild.minval) {
-			return {true, lchild.size + rchild.size + 1, min(root->data, lchild.minval), max(root->data, rchild.maxval)};
+			return {true, lchild.size + rchild.size + 1, min(lchild.minval, root->data), max(rchild.maxval, root->data)};
 		}
-		return {false, max(lchild.size, rchild.size), max(root->data, lchild.maxval), min(root->data, rchild.minval)};
+		return {false, max(lchild.size, rchild.size), INT_MIN, INT_MAX};
 	}
 	int largestBst(Node *root) {
 		// code here
