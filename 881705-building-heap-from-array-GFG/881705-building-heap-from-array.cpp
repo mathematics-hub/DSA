@@ -3,7 +3,7 @@ class Solution {
 	void buildHeap(vector<int>& arr) {
 		// code here
 		int size = arr.size();
-		for (int i = 1; i<size; i++) {
+		for (int i =1;i<size; i++) {
 			int ci = i;
 			while (ci>0 && arr[(ci - 1)/2]<arr[ci]) {
 				swap(arr[(ci - 1)/2], arr[ci]);
