@@ -5,14 +5,15 @@ class Solution {
 		if (n == 1) {
 			return 1;
 		}
-		int i = 0, count = 0;
-		while (i<n) {
+		int count = 0;
+		while (n) {
 			count++;
-			i = 2*i + 1;
+			n = n/2;
 		}
 		return count - 1;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
