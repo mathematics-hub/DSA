@@ -6,17 +6,17 @@ class Solution {
 		for (int val:arr) {
 			q.push(val);
 		}
-		int totalCost = 0;
-		while (q.size() != 1) {
+		int total_Cost = 0;
+		while (q.size()>1) {
 			int firstmin = q.top();
 			q.pop();
 			int secondmin = q.top();
 			q.pop();
 			int total = firstmin + secondmin;
-			totalCost += (total);
+			total_Cost += total;
 			q.push(total);
 		}
-		return totalCost;
+		return total_Cost;
 	}
 };
 
