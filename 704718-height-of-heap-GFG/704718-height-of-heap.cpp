@@ -5,12 +5,7 @@ class Solution {
 		if (n == 1) {
 			return 1;
 		}
-		int count = 0;
-		while (n) {
-			count++;
-			n = n/2;
-		}
-		return count - 1;
+		return log2(n);
 	}
 };
 
