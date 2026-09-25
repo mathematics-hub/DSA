@@ -9,7 +9,7 @@ class Solution {
 		}
 		if (right<n && arr[right]>arr[largest]) {
 			largest = right;
-		} 
+		}
 		if (largest != index) {
 			swap(arr[largest], arr[index]);
 			heapify(arr, largest, n);
