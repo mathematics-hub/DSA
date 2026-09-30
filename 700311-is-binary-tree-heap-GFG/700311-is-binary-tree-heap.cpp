@@ -14,14 +14,25 @@ class Node {
 
 class Solution {
 	public:
-	bool CBT(Node*root, int index, int totalnode) {
-		if (root == NULL) {
-			return true;
+	bool CBT(Node*root) {
+		queue<Node *> q;
+		q.push(root);
+		bool nullSeen = false;
+		while (!q.empty()) {
+			Node *temp = q.front();
+			q.pop();
+			if (temp == NULL) {
+				nullSeen = true;
+			}
+			else {
+				if (nullSeen) {
+					return false;
+				}
+				q.push(temp->left);
+				q.push(temp->right);
+			}
 		}
-		if (index >= totalnode) {
-			return false;
-		}
-		return CBT(root->left, 2*index + 1, totalnode) && CBT(root->right, 2*index + 2, totalnode);
+		return true;
 	}
 	int totalNode(Node *root) {
 		if (root == NULL) {
@@ -44,7 +55,7 @@ class Solution {
 	bool isHeap(Node* root) {
 		// code here
 		int num = totalNode(root);
-		bool ans = CBT(root, 0, num);
+		bool ans = CBT(root);
 		if (ans == false) {
 			return 0;
 		}
