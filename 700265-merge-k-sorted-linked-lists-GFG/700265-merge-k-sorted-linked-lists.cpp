@@ -9,14 +9,14 @@ class Node {
 	}
 };
 */
+class Compare {
+	public:
+	bool operator()(Node *a, Node *b) {
+		return a->data>b->data;
+	}
+};
 class Solution {
 	public:
-	class Compare {
-		public:
-		bool operator()(Node *a, Node *b) {
-			return a->data>b->data;
-		}
-	};
 	Node* mergeKLists(vector<Node*>& arr) {
 		// code here
 		priority_queue<Node *, vector<Node*>, Compare>q(arr.begin(), arr.end());
