@@ -1,35 +1,28 @@
 class Solution {
 	public:
-	vector<int> merge(vector<int> &a, vector<int> &b) {
-		int i = 0, j = 0;
-		vector<int> ans;
-		while (i<a.size() && j<b.size()) {
-			if (a[i]<b[j]) {
-				ans.push_back(a[i]);
-				i++;
-			}
-			else {
-				ans.push_back(b[j]);
-				j++;
-			}
-		}
-		while (i<a.size()) {
-			ans.push_back(a[i]);
-			i++;
-		}
-		while (j<b.size()) {
-			ans.push_back(b[j]);
-			j++;
-		}
-		return ans;
-	}
 	vector<int> mergeArrays(vector<vector<int>> &mat) {
 		// Code here
-		vector<int> result;
-		for (int i = 0; i<mat.size(); i++) {
-			result = merge(result, mat[i]);
+		int m = mat.size();
+		int n = mat[0].size();
+		vector<int> ans;
+		priority_queue<pair<int, pair<int, int>>, vector<pair<int, pair<int, int>>>, greater<pair<int, pair<int, int>>>> q;
+		for (int i = 0; i<m; i++) {
+			q.push({mat[i][0], {i, 0}});
 		}
-		return result;
+		while (!q.empty()) {
+			auto temp = q.top();
+			q.pop();
+			
+			int val = temp.first;
+			int i = temp.second.first;
+			int j = temp.second.second;
+			
+			ans.push_back(val);
+			if (j<n - 1) {
+				q.push({mat[i][j + 1], {i, j + 1}});
+			}
+		}
+		return ans;
 	}
 };
 
