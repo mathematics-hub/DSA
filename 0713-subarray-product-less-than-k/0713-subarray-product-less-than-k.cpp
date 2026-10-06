@@ -9,12 +9,12 @@ public:
         int product = 1;
         while (end < nums.size()) {
             product *= nums[end];
-            end++;
             while (start <= end && product >= k) {
                 product /= nums[start];
                 start++;
             }
-            totalSubArray += (end - start);
+            totalSubArray += (end - start + 1);
+            end++;
         }
         return totalSubArray;
     }
