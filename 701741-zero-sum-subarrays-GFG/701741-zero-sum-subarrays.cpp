@@ -5,17 +5,17 @@ class Solution {
 		int totalSubarray = 0;
 		
 		int prefixSum = 0;
-		unordered_map<int, int> m;
-		m[0] = 1;
+		unordered_map<int, int> mp;
+		mp.insert({0, 1});
 		
 		for (int i = 0; i<arr.size(); i++) {
 			prefixSum += arr[i];
-			if (m.find(prefixSum) != m.end()) {
-				totalSubarray += m[prefixSum];
-				m[prefixSum]++;
+			if (mp.find(prefixSum) != mp.end()) {
+				totalSubarray += mp[prefixSum];
+				mp[prefixSum]++;
 			}
 			else {
-				m[prefixSum] = 1;
+				mp[prefixSum] = 1;
 			}
 		}
 		return totalSubarray;
