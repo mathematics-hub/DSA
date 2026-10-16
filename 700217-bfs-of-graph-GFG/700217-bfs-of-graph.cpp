@@ -4,23 +4,24 @@ class Solution {
 		// code here
 		vector<int> ans;
 		queue<int> q;
+		vector<bool> visited(adj.size(), false);
 		q.push(0);
-		vector<bool> visit(adj.size(), 0);
-		visit[0] = 1;
+		visited[0] = true;
 		while (!q.empty()) {
 			int temp = q.front();
 			q.pop();
 			ans.push_back(temp);
 			for (int i = 0; i<adj[temp].size(); i++) {
-				if (visit[adj[temp][i]] != 1) {
+				if (visited[adj[temp][i]] == false) {
 					q.push(adj[temp][i]);
-					visit[adj[temp][i]] = 1;
+					visited[adj[temp][i]] = true;
 				}
 			}
 		}
 		return ans;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
