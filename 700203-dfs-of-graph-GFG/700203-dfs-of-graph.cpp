@@ -1,22 +1,32 @@
 class Solution {
 	public:
-	void dfsTraversal(vector<vector<int>> &adj, int node, vector<bool> &visit, vector<int> &ans) {
-		visit[node] = 1;
-		ans.push_back(node);
-		for (int i = 0; i<adj[node].size(); i++) {
-			if (visit[adj[node][i]] == 0) {
-				dfsTraversal(adj, adj[node][i], visit, ans);
-			}
-		}
-	}
 	vector<int> dfs(vector<vector<int>> & adj) {
 		// Code here
-		vector<bool> visit(adj.size(), 0);
-		vector<int> ans;
-		dfsTraversal(adj, 0, visit, ans);
+		stack<int> st;
+		vector<bool> visit(adj.size(), false);
+		st.push(0);
+		visit[0] = true;
+		vector<int> ans = {0};
+		while (!st.empty()) {
+			int temp = st.top();
+			bool visitAll = true;
+			for (int i = 0; i<adj[temp].size(); i++) {
+				if (visit[adj[temp][i]] == false) {
+					ans.push_back(adj[temp][i]);
+					visit[adj[temp][i]] = true;
+					st.push(adj[temp][i]);
+					visitAll = false;
+					break;
+				}
+			}
+			if (visitAll) {
+				st.pop();
+			}
+		}
 		return ans;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
