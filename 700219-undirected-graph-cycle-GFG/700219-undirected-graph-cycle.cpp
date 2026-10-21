@@ -23,10 +23,8 @@ class Solution {
 		}
 		vector<bool> visit(V, 0);
 		for (int i = 0; i < V; i++) {
-			if (visit[i] == 0) {
-				if (DFS(adjList, i, -1, visit) == true) {
+			if (visit[i] == 0 && DFS(adjList, i, -1, visit) == true) {
 					return true;
-				}
 			}
 		}
 		return false;
