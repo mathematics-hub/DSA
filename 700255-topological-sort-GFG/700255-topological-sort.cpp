@@ -1,31 +1,39 @@
 class Solution {
 	public:
-	void DFS(vector<vector<int>> &adjList, int start, vector<bool> &visit,vector<int> &ans) {
-		visit[start] = 1;
-		for (int i = 0; i<adjList[start].size(); i++) {
-			if (visit[adjList[start][i]] == 0) {
-				DFS(adjList, adjList[start][i], visit,ans);
-			}
-		}
-		ans.push_back(start);
-	}
 	vector<int> topoSort(int V, vector<vector<int>> & edges) {
 		// code here
 		vector<vector<int>> adjList(V);
 		for (int i = 0; i<edges.size(); i++) {
 			adjList[edges[i][0]].push_back(edges[i][1]);
 		}
-		vector<bool> visit(V, false);
 		vector<int> ans;
-		for (int i = 0; i<V; i++) {
-			if (visit[i] == false) {
-				DFS(adjList, i, visit,ans);
+		vector<int> indegree(adjList.size(), 0);
+		for (int i = 0; i<adjList.size(); i++) {
+			for (int j = 0; j<adjList[i].size(); j++) {
+				indegree[adjList[i][j]]++;
 			}
 		}
-		reverse(ans.begin(), ans.end());
+		queue<int> q;
+		for (int i = 0; i<indegree.size(); i++) {
+			if (indegree[i] == 0) {
+				q.push(i);
+			}
+		}
+		while (!q.empty()) {
+			int temp = q.front();
+			q.pop();
+			ans.push_back(temp);
+			for (int i = 0; i<adjList[temp].size(); i++) {
+				indegree[adjList[temp][i]]--;
+				if (indegree[adjList[temp][i]] == 0) {
+					q.push(adjList[temp][i]);
+				}
+			}
+		}
 		return ans;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
