@@ -1,21 +1,32 @@
 class Solution {
 	public:
-	bool dfs(vector<vector<int>> &adjList, int node, vector<bool> &path, vector<bool> &visit) {
-		path[node] = 1;
-		visit[node] = 1;
-		for (int i = 0; i<adjList[node].size(); i++) {
-			if (path[adjList[node][i]]) {
-				return true;
-			}
-			if (visit[adjList[node][i]]) {
-				continue;
-			}
-			if (dfs(adjList, adjList[node][i], path, visit)) {
-				return true;
+	bool BFS(vector<vector<int>> &adjList) {
+		int V = adjList.size();
+		vector<int> indegree(V, 0);
+		for (int i = 0; i<V; i++) {
+			for (int j = 0; j<adjList[i].size(); j++) {
+				indegree[adjList[i][j]]++;
 			}
 		}
-		path[node] = 0;
-		return false;
+		queue<int> q;
+		for (int i = 0; i<V; i++) {
+			if (indegree[i] == 0) {
+				q.push(i);
+			}
+		}
+		int count = 0;
+		while (!q.empty()) {
+			int temp = q.front();
+			q.pop();
+			count++;
+			for (int i = 0; i<adjList[temp].size(); i++) {
+				indegree[adjList[temp][i]]--;
+				if (indegree[adjList[temp][i]] == 0) {
+					q.push(adjList[temp][i]);
+				}
+			}
+		}
+		return count != V;
 	}
 	bool isCyclic(int V, vector<vector<int>> &edges) {
 		// code here
@@ -23,14 +34,8 @@ class Solution {
 		for (int i = 0; i<edges.size(); i++) {
 			adjList[edges[i][0]].push_back(edges[i][1]);
 		}
-		vector<bool> path(V, 0);
-		vector<bool> visit(V, 0);
-		for (int i = 0; i<V; i++) {
-			if (visit[i] == false && dfs(adjList, i, path, visit)) {
-				return true;
-			}
-		}
-		return false;
+		
+		return BFS(adjList);
 	}
 };
 
