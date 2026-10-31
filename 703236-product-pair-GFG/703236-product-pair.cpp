@@ -5,6 +5,11 @@ class Solution {
 		sort(arr.begin(), arr.end());
 		int n = arr.size();
 		for (int i = 0; i<n - 1; i++) {
+			if (arr[i] == 0) {
+				if (target == 0)return true;
+				continue;
+			}
+			if (target%arr[i] != 0)continue;
 			int x = target/arr[i];
 			int start = i + 1, end = n - 1;
 			while (start <= end) {
@@ -23,7 +28,6 @@ class Solution {
 		return false;
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
