@@ -4,25 +4,16 @@ class Solution {
 		// code here
 		sort(arr.begin(), arr.end());
 		int n = arr.size();
-		for (int i = 0; i<n - 1; i++) {
-			if (arr[i] == 0) {
-				if (target == 0)return true;
-				continue;
+		int start = 0, end = n - 1;
+		while (start<end) {
+			if (arr[start]*arr[end] == target) {
+				return true;
 			}
-			if (target%arr[i] != 0)continue;
-			int x = target/arr[i];
-			int start = i + 1, end = n - 1;
-			while (start <= end) {
-				int mid = (start + end)/2;
-				if (arr[mid] == x) {
-					return true;
-				}
-				else if (x<arr[mid]) {
-					end = mid - 1;
-				}
-				else {
-					start = mid + 1;
-				}
+			else if (arr[start]*arr[end]<target) {
+				start++;
+			}
+			else {
+				end--;
 			}
 		}
 		return false;
