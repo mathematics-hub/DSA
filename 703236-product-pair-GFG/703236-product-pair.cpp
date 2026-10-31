@@ -6,10 +6,11 @@ class Solution {
 		int n = arr.size();
 		int start = 0, end = n - 1;
 		while (start<end) {
-			if (arr[start]*arr[end] == target) {
+			long long current_pdt = (long long)arr[start]*arr[end];
+			if (current_pdt == target) {
 				return true;
 			}
-			else if (arr[start]*arr[end]<target) {
+			else if (current_pdt<target) {
 				start++;
 			}
 			else {
@@ -19,6 +20,7 @@ class Solution {
 		return false;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
