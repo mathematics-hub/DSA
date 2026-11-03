@@ -2,22 +2,28 @@ class Solution {
 	public:
 	bool canSplit(vector<int>& arr) {
 		int n = arr.size();
-		int totalSum = 0;
-		for (int i = 0; i<n; i++) {
-			totalSum += arr[i];
-		}
-		int prefix = 0;
-		for (int i = 0; i<n - 1; i++) {
-			prefix += arr[i];
-			int suffix = totalSum - prefix;
-			if (prefix == suffix) {
+		int start = 0, end = n - 1;
+		int sum1 = 0, sum2 = 0;
+		while (start <= end) {
+			if (sum1<sum2) {
+				sum1 += arr[start];
+				start++;
+			}
+			if (sum1>sum2) {
+				sum2 += arr[end];
+				end--;
+			}
+			if (start != end) {
+				sum1 += arr[start];
+				start++;
+			}
+			else {
 				return true;
 			}
 		}
 		return false;
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
