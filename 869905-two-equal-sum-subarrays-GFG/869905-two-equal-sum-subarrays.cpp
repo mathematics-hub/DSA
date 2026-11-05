@@ -9,18 +9,17 @@ class Solution {
 				start++;
 				sum1 += arr[start];
 			}
-			if (sum1>sum2) {
+			else {
 				end--;
 				sum2 += arr[end];
 			}
-			if (start + 1 == end && sum1 == sum2) {
+			if (start == end && sum1 == sum2) {
 				return true;
 			}
 		}
 		return false;
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
