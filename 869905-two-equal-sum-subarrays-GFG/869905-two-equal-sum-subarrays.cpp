@@ -13,7 +13,7 @@ class Solution {
 				end--;
 				sum2 += arr[end];
 			}
-			if (start == end && sum1 == sum2) {
+			if (start + 1 == end && sum1 == sum2) {
 				return true;
 			}
 		}
