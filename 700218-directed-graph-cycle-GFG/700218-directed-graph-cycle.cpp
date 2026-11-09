@@ -1,44 +1,28 @@
 class Solution {
 	public:
-	bool BFS(vector<vector<int>> &adjList) {
-		int V = adjList.size();
-		vector<int> indegree(V, 0);
-		for (int i = 0; i<V; i++) {
-			for (int j = 0; j<adjList[i].size(); j++) {
-				indegree[adjList[i][j]]++;
-			}
+	bool DFS(vector<vector<int>> &adjList, int startNode, vector<bool> &path, vector<bool> &visit) {
+		path[startNode] = true;
+		for (int i = 0; i<adjList[startNode].size(); i++) {
+			if (path[adjList[startNode][i]])
+				return true;
+			if (DFS(adjList, adjList[startNode][i], path, visit))
+				return true;
 		}
-		queue<int> q;
-		for (int i = 0; i<V; i++) {
-			if (indegree[i] == 0) {
-				q.push(i);
-			}
-		}
-		int count = 0;
-		while (!q.empty()) {
-			int temp = q.front();
-			q.pop();
-			count++;
-			for (int i = 0; i<adjList[temp].size(); i++) {
-				indegree[adjList[temp][i]]--;
-				if (indegree[adjList[temp][i]] == 0) {
-					q.push(adjList[temp][i]);
-				}
-			}
-		}
-		return count != V;
+		path[startNode] = false;
+		return false;
 	}
-	bool isCyclic(int V, vector<vector<int>> &edges) {
+	bool isCyclic(vector<vector<int>> & adj) {
 		// code here
-		vector<vector<int>> adjList(V);
-		for (int i = 0; i<edges.size(); i++) {
-			adjList[edges[i][0]].push_back(edges[i][1]);
+		int v = adj.size();
+		vector<bool> path(v, false);
+		vector<bool> visit(v, false);
+		for (int i = 0; i<v; i++) {
+			if (DFS(adj, i, path, visit))
+				return true;
 		}
-		
-		return BFS(adjList);
+		return false;
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
