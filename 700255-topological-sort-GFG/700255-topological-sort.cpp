@@ -13,8 +13,11 @@ class Solution {
 		// code here
 		vector<bool> visit(adj.size(), false);
 		stack<int> st;
-		for (int i = 0; i<adj.size(); i++)
-			DFS(adj, i, visit, st);
+		for (int i = 0; i<adj.size(); i++) {
+			if (visit[i] == false) {
+				DFS(adj, i, visit, st);
+			}
+		}
 		vector<int> ans;
 		while (!st.empty()) {
 			ans.push_back(st.top());
@@ -23,7 +26,6 @@ class Solution {
 		return ans;
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
