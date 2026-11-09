@@ -2,6 +2,7 @@ class Solution {
 	public:
 	bool DFS(vector<vector<int>> &adjList, int startNode, vector<bool> &path, vector<bool> &visit) {
 		path[startNode] = true;
+		visit[startNode] = true;
 		for (int i = 0; i<adjList[startNode].size(); i++) {
 			if (path[adjList[startNode][i]])
 				return true;
@@ -23,6 +24,7 @@ class Solution {
 		return false;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
