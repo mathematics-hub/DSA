@@ -5,7 +5,7 @@ class Solution {
 		for (int i = 0; i<adjList[startNode].size(); i++) {
 			if (path[adjList[startNode][i]])
 				return true;
-			if (DFS(adjList, adjList[startNode][i], path, visit))
+			if (visit[adjList[startNode][i]] == false && DFS(adjList, adjList[startNode][i], path, visit))
 				return true;
 		}
 		path[startNode] = false;
@@ -17,7 +17,7 @@ class Solution {
 		vector<bool> path(v, false);
 		vector<bool> visit(v, false);
 		for (int i = 0; i<v; i++) {
-			if (DFS(adj, i, path, visit))
+			if (visit[i] == false && DFS(adj, i, path, visit))
 				return true;
 		}
 		return false;
