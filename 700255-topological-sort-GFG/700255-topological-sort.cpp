@@ -1,34 +1,24 @@
 class Solution {
 	public:
-	vector<int> topoSort(int V, vector<vector<int>> & edges) {
+	void DFS(vector<vector<int>> &adjList, int startNode, vector<bool> &visit, stack<int> &st) {
+		visit[startNode] = true;
+		for (int i = 0; i<adjList[startNode].size(); i++) {
+			if (visit[adjList[startNode][i]] == false) {
+				DFS(adjList, adjList[startNode][i], visit, st);
+			}
+		}
+		st.push(startNode);
+	}
+	vector<int> topoSort(vector<vector<int>> & adj) {
 		// code here
-		vector<vector<int>> adjList(V);
-		for (int i = 0; i<edges.size(); i++) {
-			adjList[edges[i][0]].push_back(edges[i][1]);
-		}
+		vector<bool> visit(adj.size(), false);
+		stack<int> st;
+		for (int i = 0; i<adj.size(); i++)
+			DFS(adj, i, visit, st);
 		vector<int> ans;
-		vector<int> indegree(adjList.size(), 0);
-		for (int i = 0; i<adjList.size(); i++) {
-			for (int j = 0; j<adjList[i].size(); j++) {
-				indegree[adjList[i][j]]++;
-			}
-		}
-		queue<int> q;
-		for (int i = 0; i<indegree.size(); i++) {
-			if (indegree[i] == 0) {
-				q.push(i);
-			}
-		}
-		while (!q.empty()) {
-			int temp = q.front();
-			q.pop();
-			ans.push_back(temp);
-			for (int i = 0; i<adjList[temp].size(); i++) {
-				indegree[adjList[temp][i]]--;
-				if (indegree[adjList[temp][i]] == 0) {
-					q.push(adjList[temp][i]);
-				}
-			}
+		while (!st.empty()) {
+			ans.push_back(st.top());
+			st.pop();
 		}
 		return ans;
 	}
