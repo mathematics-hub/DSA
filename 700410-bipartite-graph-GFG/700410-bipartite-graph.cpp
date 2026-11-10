@@ -1,9 +1,7 @@
 class Solution {
 	public:
-	bool BFS(vector<vector<int>> &adjList, int startNode) {
-	    int v=adjList.size();
+	bool BFS(vector<vector<int>> &adjList, int startNode,vector<int> &color) {
 		queue<int> q;
-		vector<int> color(v, -1);
 		q.push(startNode);
 		color[startNode] = 0;
 		while (!q.empty()) {
@@ -22,8 +20,14 @@ class Solution {
 		return true;
 	}
 	bool isBipartite(vector<vector<int>> &adj) {
-		// Code here
-		return BFS(adj, 0);
+		int v = adj.size();
+		vector<int> color(v, -1);
+		for (int i = 0; i<v; i++) {
+			if (color[i] == -1 && BFS(adj, i, color)==false) {
+				return false;
+			}
+		}
+		return true;
 	}
 };
 
