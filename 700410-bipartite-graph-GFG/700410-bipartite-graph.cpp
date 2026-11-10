@@ -1,29 +1,31 @@
 class Solution {
 	public:
-	bool DFS(int node, int color, vector<vector<int>> &adjList, vector<int> &visit) {
-		visit[node] = color;
-		for (int i = 0; i<adjList[node].size(); i++) {
-			if (visit[node] == visit[adjList[node][i]]) {
-				return false;
-			}
-			if (visit[adjList[node][i]] == -1 && !DFS(adjList[node][i], color == 0?1:0, adjList, visit)) {
-				return false;
+	bool BFS(vector<vector<int>> &adjList, int startNode) {
+	    int v=adjList.size();
+		queue<int> q;
+		vector<int> color(v, -1);
+		q.push(startNode);
+		color[startNode] = 0;
+		while (!q.empty()) {
+			int temp = q.front();
+			q.pop();
+			for (int i = 0; i<adjList[temp].size(); i++) {
+				if (color[temp] == color[adjList[temp][i]]) {
+					return false;
+				}
+				if (color[adjList[temp][i]] == -1) {
+					q.push(adjList[temp][i]);
+					color[adjList[temp][i]] = (color[temp] == 1?0:1);
+				}
 			}
 		}
 		return true;
 	}
-	bool isBipartite(int V, vector<vector<int>> &edges) {
+	bool isBipartite(vector<vector<int>> &adj) {
 		// Code here
-		vector<vector<int>> adjList(V);
-		for (int i = 0; i<edges.size(); i++) {
-			adjList[edges[i][0]].push_back(edges[i][1]);
-			adjList[edges[i][1]].push_back(edges[i][0]);
-		}
-		vector<int> visit(adjList.size(), -1);
-		return DFS(0, 0, adjList, visit);
+		return BFS(adj, 0);
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
