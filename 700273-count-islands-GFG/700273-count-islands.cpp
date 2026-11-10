@@ -1,10 +1,10 @@
 class Solution {
 	public:
-	void island(vector<vector<char>> &grid, vector<vector<bool>> &visit, int i, int j)
+	void island(vector<vector<char>> &grid, int i, int j)
 	{
-		visit[i][j] = 1;
 		queue<pair<int, int>> q;
 		q.push({i, j});
+		grid[i][j] = 'W';
 		while (!q.empty())
 			{
 			int r = q.front().first;
@@ -16,10 +16,10 @@ class Solution {
 				{
 				int nr = r + row[k];
 				int nc = c + col[k];
-				if (nr >= 0 && nr < grid.size() && nc >= 0 && nc < grid[0].size() && grid[nr][nc] == 'L' && visit[nr][nc] == 0)
+				if (nr >= 0 && nr < grid.size() && nc >= 0 && nc < grid[0].size() && grid[nr][nc] == 'L')
 					{
-					visit[nr][nc] = 1;
 					q.push({nr, nc});
+					grid[nr][nc] = 'W';
 				}
 			}
 		}
@@ -29,15 +29,14 @@ class Solution {
 		// Code here
 		int row = grid.size();
 		int col = grid[0].size();
-		vector<vector<bool>> visit(row, vector<bool>(col, 0));
 		int count = 0;
 		for (int i = 0; i < row; i++)
 			{
 			for (int j = 0; j < col; j++)
 				{
-				if (grid[i][j] == 'L' && visit[i][j] == 0)
+				if (grid[i][j] == 'L')
 					{
-					island(grid, visit, i, j);
+					island(grid, i, j);
 					count++;
 				}
 			}
@@ -45,6 +44,7 @@ class Solution {
 		return count;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
