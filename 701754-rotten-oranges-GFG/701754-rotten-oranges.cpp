@@ -21,21 +21,15 @@ class Solution {
 				int i = q.front().first;
 				int j = q.front().second;
 				q.pop();
-				if (j>0 and mat[i][j - 1] == 1) {
-					mat[i][j - 1] = 2;
-					q.push({i, j - 1});
-				}
-				if (j<col - 1 and mat[i][j + 1] == 1) {
-					mat[i][j + 1] = 2;
-					q.push({i, j + 1});
-				}
-				if (i>0 and mat[i - 1][j] == 1) {
-					mat[i - 1][j] = 2;
-					q.push({i - 1, j});
-				}
-				if (i<row - 1 and mat[i + 1][j] == 1) {
-					mat[i + 1][j] = 2;
-					q.push({i + 1, j});
+				int drow[4] = {-1, 1, 0, 0};
+				int dcol[4] = {0, 0, -1, 1};
+				for (int dir = 0; dir<4; dir++) {
+					int nr = i + drow[dir];
+					int nc = j + dcol[dir];
+					if (nr>=0 && nr<row && nc>=0 && nc<col && mat[nr][nc] == 1) {
+						mat[nr][nc] = 2;
+						q.push({nr, nc});
+					}
 				}
 			}
 		}
