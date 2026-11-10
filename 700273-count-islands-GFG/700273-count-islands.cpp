@@ -4,11 +4,11 @@ class Solution {
 	{
 		queue<pair<int, int>> q;
 		q.push({i, j});
-		grid[i][j] = 'W';
 		while (!q.empty())
 			{
 			int r = q.front().first;
 			int c = q.front().second;
+			grid[r][c]='W';
 			q.pop();
 			int row[] = {-1, -1, -1, 0, 1, 1, 1, 0};
 			int col[] = {-1, 0, 1, 1, 1, 0, -1, -1};
@@ -19,7 +19,6 @@ class Solution {
 				if (nr >= 0 && nr < grid.size() && nc >= 0 && nc < grid[0].size() && grid[nr][nc] == 'L')
 					{
 					q.push({nr, nc});
-					grid[nr][nc] = 'W';
 				}
 			}
 		}
