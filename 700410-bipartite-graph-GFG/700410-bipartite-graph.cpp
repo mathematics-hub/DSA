@@ -1,20 +1,13 @@
 class Solution {
 	public:
-	bool BFS(vector<vector<int>> &adjList, int startNode,vector<int> &color) {
-		queue<int> q;
-		q.push(startNode);
-		color[startNode] = 0;
-		while (!q.empty()) {
-			int temp = q.front();
-			q.pop();
-			for (int i = 0; i<adjList[temp].size(); i++) {
-				if (color[temp] == color[adjList[temp][i]]) {
-					return false;
-				}
-				if (color[adjList[temp][i]] == -1) {
-					q.push(adjList[temp][i]);
-					color[adjList[temp][i]] = (color[temp] == 1?0:1);
-				}
+	bool DFS(vector<vector<int>> &adjList, int startNode, int clr, vector<int> &color) {
+		color[startNode] = clr;
+		for (int i = 0; i<adjList[startNode].size(); i++) {
+			if (color[startNode] == color[adjList[startNode][i]]) {
+				return false;
+			}
+			if (color[adjList[startNode][i]] == -1 && DFS(adjList, adjList[startNode][i], (clr + 1)%2, color) == false) {
+				return false;
 			}
 		}
 		return true;
@@ -23,7 +16,7 @@ class Solution {
 		int v = adj.size();
 		vector<int> color(v, -1);
 		for (int i = 0; i<v; i++) {
-			if (color[i] == -1 && BFS(adj, i, color)==false) {
+			if (color[i] == -1 && DFS(adj, i, 0, color) == false) {
 				return false;
 			}
 		}
