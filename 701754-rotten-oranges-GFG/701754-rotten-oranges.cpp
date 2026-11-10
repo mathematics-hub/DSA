@@ -12,9 +12,6 @@ class Solution {
 				}
 			}
 		}
-		if (q.size() == 0) {
-			return 0;
-		}
 		int totaltime = 0;
 		while (!q.empty()) {
 			int size = q.size();
@@ -49,7 +46,7 @@ class Solution {
 				}
 			}
 		}
-		return totaltime - 1;
+		return totaltime == 0?0:totaltime - 1;
 	}
 };
 
