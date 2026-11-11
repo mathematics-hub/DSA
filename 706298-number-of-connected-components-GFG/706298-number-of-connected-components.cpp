@@ -2,16 +2,9 @@ class Solution {
 	public:
 	void group(vector<vector<int>> & adjList, int startNode, vector<bool> &visit) {
 		visit[startNode] = 1;
-		queue<int> q;
-		q.push(startNode);
-		while (!q.empty()) {
-			int temp = q.front();
-			q.pop();
-			for (int i = 0; i<adjList[temp].size(); i++) {
-				if (visit[adjList[temp][i]] == 0) {
-					visit[adjList[temp][i]] = 1;
-					q.push(adjList[temp][i]);
-				}
+		for (int val : adjList[startNode]) {
+			if (visit[val] == 0) {
+				group(adjList, val, visit);
 			}
 		}
 	}
