@@ -1,0 +1,5 @@
+# [Prerequisite Tasks](https://www.geeksforgeeks.org/problems/prerequisite-tasks/1?page=2&difficulty%5B%5D=1&category%5B%5D=Graph&sortBy=submissions)
+## Medium
+Given n tasks numbered from 0 to n - 1 and a list of prerequisite pairs pre[][], where each pair [a, b] means that task b must be completed before task a, determine whether it is possible to complete all the tasks.Return true if all tasks can be finished; otherwise, return false.Examples:Input: n = 4,  pre[][] = [[2, 0], [2, 1], [3, 2]]Output: trueExplanation: To finish task 2, you must first finish 0 and 1.To finish task 3, you must first finish 2.
+All tasks can be completed in the order [0, 1, 2, 3] or [1, 0, 2, 3].Input: n = 3, pre[][] = [[0, 1], [1, 2], [2, 0]]Output: falseExplanation: To finish task 0, you must first finish 1. To finish task 1, you must first finish 2. To finish task 2, you must first finish 0.
+Since each task depends on the other, it is impossible to complete all.
