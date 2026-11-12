@@ -5,12 +5,14 @@ class Solution {
 		if (n<2) {
 			return false;
 		}
-		for (int i = 2; i*i <= n; i++) {
-			if (n%i == 0)return false;
+		for (int i = 2; i<n/i; i++) {
+			if (n%i == 0)
+				return false;
 		}
 		return true;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
