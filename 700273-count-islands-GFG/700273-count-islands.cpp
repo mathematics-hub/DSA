@@ -2,28 +2,17 @@ class Solution {
 	public:
 	void island(vector<vector<char>> &grid, int i, int j)
 	{
-		queue<pair<int, int>> q;
-		q.push({i, j});
+		
 		grid[i][j] = 'W';
-		while (!q.empty())
-			{
-			int r = q.front().first;
-			int c = q.front().second;
-			q.pop();
-			int row[] = {-1, -1, -1, 0, 1, 1, 1, 0};
-			int col[] = {-1, 0, 1, 1, 1, 0, -1, -1};
-			for (int k = 0; k < 8; k++)
-				{
-				int nr = r + row[k];
-				int nc = c + col[k];
-				if (nr >= 0 && nr < grid.size() && nc >= 0 && nc < grid[0].size() && grid[nr][nc] == 'L')
-					{
-					q.push({nr, nc});
-					grid[nr][nc] = 'W';
-				}
+		int row[] = {-1, -1, -1, 0, 1, 1, 1, 0};
+		int col[] = {-1, 0, 1, 1, 1, 0, -1, -1};
+		for (int k = 0; k<8; k++) {
+			int nr = i + row[k];
+			int nc = j + col[k];
+			if (nr >= 0 && nr<grid.size() && nc >= 0 && nc<grid[0].size() && grid[nr][nc] == 'L') {
+				island(grid, nr, nc);
 			}
 		}
-		return;
 	}
 	int countIslands(vector<vector<char>> & grid) {
 		// Code here
