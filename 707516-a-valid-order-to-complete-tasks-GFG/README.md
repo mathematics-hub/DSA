@@ -1,0 +1,7 @@
+# [A Valid Order to Complete Tasks](https://www.geeksforgeeks.org/problems/course-schedule/1?page=2&difficulty%5B%5D=1&category%5B%5D=Graph&sortBy=submissions)
+## Medium
+Given n&nbsp;tasks, labeled from 0 to n - 1 and a 2d array prerequisites, pre[][] where pre[i] = [x, y] indicates&nbsp;that task y must be completed before task x. Find an ordering of tasks in which all the tasks can be completed.Note: There may be multiple correct orders, you just need to return any one of them. If it is impossible to finish all tasks, return an empty array. The Driver code will print true if you return any correct order of tasks else it will print false.&nbsp;Examples:Input: n = 4, pre[][] = [[2, 0], [2, 1], [3, 2]]
+Output: true [This output is only by driver code, you need to return an array]
+Explanation: Both [0, 1, 2, 3] and [1, 0, 2, 3] are valid orders. Task 2 requires both tasks 0 and 1 to be completed first. Task 3 requires task 2 to be completed first. Input: n = 3, pre[][] = [[1, 0], [2, 1]]
+Output: true [This output is only by driver code, you need to return an array]
+Explanation: The only valid order is [0, 1, 2]. To complete task 1, you must finish task 0 first. To complete task 2, you must finish task 1 first. Constraints:1 ≤ n ≤ 1041 ≤ pre.size() ≤ 1050 ≤ pre[i][0], pre[i][1] &lt; n
