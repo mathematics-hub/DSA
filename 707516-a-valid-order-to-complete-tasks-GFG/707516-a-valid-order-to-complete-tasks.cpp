@@ -1,39 +1,35 @@
 class Solution {
 	public:
+	void DFS(vector<vector<int>> &adjList, int node, vector<bool> &visit, stack<int> &st) {
+		visit[node] = true;
+		for (int val:adjList[node]) {
+			DFS(adjList, val, visit, st);
+		}
+		st.push(node);
+	}
 	vector<int> findOrder(int n, vector<vector<int>> &pre) {
 		vector<vector<int>> adjList(n);
-		vector<int> indegree(n, 0);
 		
 		for (int i = 0; i<pre.size(); i++) {
 			adjList[pre[i][1]].push_back(pre[i][0]);
-			indegree[pre[i][0]]++;
 		}
 		
-		queue<int> q;
+		vector<bool> visit(n, 0);
+		stack<int> st;
 		for (int i = 0; i<n; i++) {
-			if (indegree[i] == 0) {
-				q.push(i);
+			if (visit[i] == 0) {
+				DFS(adjList, i, visit, st);
 			}
 		}
 		
-		int count = 0;
 		vector<int> ans;
-		while (!q.empty()) {
-			int temp = q.front();
-			q.pop();
-			ans.push_back(temp);
-			count++;
-			for (int val:adjList[temp]) {
-				indegree[val]--;
-				if (indegree[val] == 0) {
-					q.push(val);
-				}
-			}
+		while (!st.empty()) {
+			ans.push_back(st.top());
+			st.pop();
 		}
-		return (count == n) ? ans : vector<int> {};
+		return (ans.size() == n) ? ans : vector<int> {};
 	}
 };
-
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
