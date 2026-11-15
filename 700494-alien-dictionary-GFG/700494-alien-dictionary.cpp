@@ -2,21 +2,10 @@ class Solution {
 	public:
 	string findOrder(vector<string> &words) {
 		// code here
-		vector<bool> distinct(26, 0);
-		for (int i = 0; i<words.size(); i++) {
-			for (int j = 0; j<words[i].size(); j++) {
-				distinct[words[i][j]-'a'] = 1;
-			}
-		}
-		int totalNode = 0;
-		for (int i = 0; i<26; i++) {
-			if (distinct[i]) {
-				totalNode++;
-			}
-		}
-		
 		vector<vector<int>> adjList(26);
 		vector<int> indegree(26, 0);
+		vector<bool> distinct(26, 0);
+		
 		for (int i = 0; i<words.size() - 1; i++) {
 			int j = 0;
 			string word1 = words[i];
@@ -28,6 +17,18 @@ class Solution {
 			if (j<len) {
 				adjList[word1[j]-'a'].push_back(word2[j]-'a');
 				indegree[word2[j]-'a']++;
+				distinct[word1[j]-'a'] = 1;
+				distinct[word2[j]-'a'] = 1;
+			}
+			else {
+				distinct[word2[j]-'a'] = 1;
+			}
+		}
+		
+		int totalNode = 0;
+		for (int i = 0; i<26; i++) {
+			if (distinct[i]) {
+				totalNode++;
 			}
 		}
 		
