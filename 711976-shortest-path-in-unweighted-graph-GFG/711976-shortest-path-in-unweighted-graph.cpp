@@ -53,7 +53,7 @@ class Solution {
 		vector<bool> visit(n, 0);
 		vector<int> dis(n, INT_MAX);
 		// BFS(adj, src, visit, dis);
-		DFS(adj, src, 0, dis);
+		sortestPath_DFS(adj, src, 0, visit, dis);
 		return dis[dest] == INT_MAX?-1:dis[dest];
 	}
 };
