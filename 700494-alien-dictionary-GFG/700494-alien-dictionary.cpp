@@ -2,26 +2,10 @@ class Solution {
 	public:
 	string findOrder(vector<string> &words) {
 		// code here
-		vector<vector<int>> adjList(26);
-		vector<int> indegree(26, 0);
 		vector<bool> distinct(26, 0);
-		
-		for (int i = 0; i<words.size() - 1; i++) {
-			int j = 0;
-			string word1 = words[i];
-			string word2 = words[i + 1];
-			int len = min(word1.size(), word2.size());
-			while (j<len && word1[j] == word2[j]) {
-				j++;
-			}
-			if (j<len) {
-				adjList[word1[j]-'a'].push_back(word2[j]-'a');
-				indegree[word2[j]-'a']++;
-				distinct[word1[j]-'a'] = 1;
-				distinct[word2[j]-'a'] = 1;
-			}
-			else {
-				distinct[word2[j]-'a'] = 1;
+		for (string str:words) {
+			for (char ch:str) {
+				distinct[ch - 'a'] = 1;
 			}
 		}
 		
@@ -29,6 +13,22 @@ class Solution {
 		for (int i = 0; i<26; i++) {
 			if (distinct[i]) {
 				totalNode++;
+			}
+		}
+		
+		vector<vector<int>> adjList(26);
+		vector<int> indegree(26, 0);
+		for (int i = 0; i<words.size() - 1; i++) {
+			string word1 = words[i];
+			string word2 = words[i + 1];
+			int len = min(word1.size(), word2.size());
+			int j = 0;
+			while (j<len && word1[j] == word2[j]) {
+				j++;
+			}
+			if (j<len) {
+				adjList[word1[j]-'a'].push_back(word2[j]-'a');
+				indegree[word2[j]-'a']++;
 			}
 		}
 		
@@ -43,17 +43,15 @@ class Solution {
 		while (!q.empty()) {
 			int temp = q.front();
 			q.pop();
-			ans += (temp + 'a');
-			
-			for (int i = 0; i<adjList[temp].size(); i++) {
-				indegree[adjList[temp][i]]--;
-				if (indegree[adjList[temp][i]] == 0) {
-					q.push(adjList[temp][i]);
+			ans.push_back(temp + 'a');
+			for (int val:adjList[temp]) {
+				indegree[val]--;
+				if (indegree[val] == 0) {
+					q.push(val);
 				}
 			}
 		}
-		
-		return ans.size() == totalNode?ans:"";
+		return (ans.size() == totalNode)?ans: "";
 	}
 };
 
