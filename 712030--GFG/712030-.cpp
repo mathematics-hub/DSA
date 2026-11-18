@@ -1,13 +1,30 @@
 class Solution {
 	public:
-	void tropologicalSort(vector<vector<pair<int, int>>> &adjList, int src, vector<bool>&visit, stack<int> &st) {
-		visit[src] = 1;
-		for (auto val:adjList[src]) {
-			if (visit[val.first] == 0) {
-				tropologicalSort(adjList, val.first, visit, st);
+	void tropologicalSort(vector<vector<pair<int, int>>> &adjList, queue<int> &trop) {
+		int V = adjList.size();
+		vector<int> indegree(V, 0);
+		for (int i = 0; i<V; i++) {
+			for (auto val:adjList[i]) {
+				indegree[val.first]++;
 			}
 		}
-		st.push(src);
+		queue<int> q;
+		for (int i = 0; i<V; i++) {
+			if (indegree[i] == 0) {
+				q.push(i);
+			}
+		}
+		while (!q.empty()) {
+			int temp = q.front();
+			q.pop();
+			trop.push(temp);
+			for (auto val:adjList[temp]) {
+				indegree[val.first]--;
+				if (indegree[val.first] == 0) {
+					q.push(val.first);
+				}
+			}
+		}
 	}
 	vector<int> shortestPath(int V, vector<vector<int>> & edges) {
 		// code here
@@ -16,15 +33,17 @@ class Solution {
 			adjList[edges[i][0]].push_back({edges[i][1], edges[i][2]});
 		}
 		
-		vector<bool> visit(V, 0);
-		stack<int> st;
-		tropologicalSort(adjList, 0, visit, st);
+		queue<int> trop;
+		tropologicalSort(adjList, trop);
+		
 		vector<int> dis(V, INT_MAX);
 		dis[0] = 0;
-		while (!st.empty()) {
-			int temp = st.top();
-			st.pop();
+		while (!trop.empty()) {
+			int temp = trop.front();
+			trop.pop();
 			for (auto val:adjList[temp]) {
+				if (dis[temp] == INT_MAX)
+					continue;
 				dis[val.first] = min(dis[val.first], dis[temp]+val.second);
 			}
 		}
