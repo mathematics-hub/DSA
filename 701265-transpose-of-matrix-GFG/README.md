@@ -1,0 +1,5 @@
+# [Transpose of Matrix](https://www.geeksforgeeks.org/problems/transpose-of-matrix-1587115621/1)
+## Easy
+Given a square matrix of size n x n, return the transpose matrix of the given matrix.The transpose of a matrix is obtained by converting all the rows to columns and all the columns to rows.Examples:Input : mat[][] = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]Output : [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+Explanation: The first row [1, 2, 3] becomes the first column, the second row [4, 5, 6] becomes the second column, and the third row [7, 8, 9] becomes the third column.Input : mat[][] =  [[1, 2], [1, 2]]
+Output : [[1, 1], [2, 2]]Explanation: The first column contains the first elements of both rows, [1, 1], and the second column contains the second elements, [2, 2].
