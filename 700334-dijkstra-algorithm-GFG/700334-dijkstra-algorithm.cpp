@@ -4,20 +4,22 @@ class Solution {
 		// Code here
 		int V = adjList.size();
 		vector<int> dis(V, INT_MAX);
-		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > mindis;
-		mindis.push({0, src});
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > q;
 		dis[src] = 0;
-		while (!mindis.empty()) {
-			int d = mindis.top().first;
-			int node = mindis.top().second;
-			mindis.pop();
+		q.push({0, src});
+		while (!q.empty()) {
+			int mindis = q.top().first;
+			int node = q.top().second;
+			q.pop();
 			
-			if (d > dis[node])
+			if (mindis > dis[node])
 				continue;
 			for (int i = 0; i<adjList[node].size(); i++) {
-				if (dis[adjList[node][i][0]]>dis[node]+adjList[node][i][1]) {
-					dis[adjList[node][i][0]] = dis[node]+adjList[node][i][1];
-					mindis.push({dis[adjList[node][i][0]], adjList[node][i][0]});
+				int nbd = adjList[node][i][0];
+				int wgt = adjList[node][i][1];
+				if (dis[nbd]>dis[node]+wgt) {
+					dis[nbd] = dis[node]+wgt;
+					q.push({dis[nbd], nbd});
 				}
 			}
 		}
@@ -25,6 +27,7 @@ class Solution {
 		return dis;
 	}
 };
+
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
