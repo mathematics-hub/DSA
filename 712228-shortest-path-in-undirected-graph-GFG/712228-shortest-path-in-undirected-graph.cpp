@@ -50,8 +50,6 @@ class Solution {
 				}
 				if (dis[nbd] == dis[node]+wgt) {
 					if (isLexSmaller(parent, nbd, node)) {
-						dis[nbd] = dis[node]+wgt;
-						q.push({dis[nbd], nbd});
 						parent[nbd] = node;
 					}
 				}
