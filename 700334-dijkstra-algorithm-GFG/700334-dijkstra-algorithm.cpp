@@ -3,32 +3,25 @@ class Solution {
 	vector<int> dijkstra(vector<vector<vector<int>>> &adjList, int src) {
 		// Code here
 		int V = adjList.size();
-		vector<bool> explored(V, 0);
 		vector<int> dis(V, INT_MAX);
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> > mindis;
+		mindis.push({0, src});
 		dis[src] = 0;
-		for (int k = 1; k <= V; k++)
-			{
-			// select the min dis of node which is unexplored
-			int mindis = INT_MAX, node = -1;
-			for (int i = 0; i<V; i++) {
-				if (explored[i] == 0 && dis[i]<mindis) {
-					mindis = dis[i];
-					node = i;
-				}
-			}
+		while (!mindis.empty()) {
+			int d = mindis.top().first;
+			int node = mindis.top().second;
+			mindis.pop();
 			
-			explored[node] = 1;
-			dis[node] = mindis;
-			
-			// relax node
+			if (d > dis[node])
+				continue;
 			for (int i = 0; i<adjList[node].size(); i++) {
-				int nbd = adjList[node][i][0];
-				int wgt = adjList[node][i][1];
-				if (!explored[nbd] && dis[nbd]>dis[node]+wgt) {
-					dis[nbd] = dis[node]+wgt;
+				if (dis[adjList[node][i][0]]>dis[node]+adjList[node][i][1]) {
+					dis[adjList[node][i][0]] = dis[node]+adjList[node][i][1];
+					mindis.push({dis[adjList[node][i][0]], adjList[node][i][0]});
 				}
 			}
 		}
+		
 		return dis;
 	}
 };
