@@ -1,13 +1,13 @@
 class Solution {
 	public:
 	bool isLexSmaller(vector<int> &parent, int oldParent, int newParent) {
-		vector<int> path1;
+		vector<int> path1; // old path
 		while (oldParent != -1) {
 			path1.push_back(oldParent);
 			oldParent = parent[oldParent];
 		}
 		
-		vector<int> path2;
+		vector<int> path2; // new path
 		while (newParent != -1) {
 			path2.push_back(newParent);
 			newParent = parent[newParent];
@@ -17,11 +17,18 @@ class Solution {
 		while (i >= 0 && k >= 0 && path1[i] == path2[k]) {
 			i--; k--;
 		}
+		if (i<0) {
+			return false;
+		}
+		if (k<0) {
+			return true;
+		}
 		return path1[i]>path2[k];
 	}
 	vector<int> shortestPath(int V, vector<vector<int>> &edges, int src, int dest) {
 		// Code here
 		vector<vector<pair<int, int>> > adjList(V);
+		// all node decrise by 1 include src and dest
 		for (int i = 0; i<edges.size(); i++) {
 			adjList[edges[i][0]-1].push_back({edges[i][1]-1, edges[i][2]});
 			adjList[edges[i][1]-1].push_back({edges[i][0]-1, edges[i][2]});
@@ -37,7 +44,7 @@ class Solution {
 			int d = q.top().first;
 			int node = q.top().second;
 			q.pop();
-			if (d>dis[node]) {
+			if (d>dis[node]) {// in middle of insert and pop dis update
 				continue;
 			}
 			for (int i = 0; i<adjList[node].size(); i++) {
@@ -49,13 +56,15 @@ class Solution {
 					parent[nbd] = node;
 				}
 				if (dis[nbd] == dis[node]+wgt) {
+					// src to nbd old_path
+					// src to node new_path
 					if (isLexSmaller(parent, nbd, node)) {
 						parent[nbd] = node;
 					}
 				}
 			}
 		}
-		if (dis[dest] == INT_MAX) {
+		if (dis[dest] == INT_MAX) {// isolated dest
 			return {-1};
 		}
 		vector<int> ans;
