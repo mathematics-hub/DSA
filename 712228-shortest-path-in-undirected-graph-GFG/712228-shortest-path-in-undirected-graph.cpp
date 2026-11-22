@@ -22,7 +22,7 @@ class Solution {
 		}
 		if (k<0) {
 			return true;
-		}
+		} 
 		return path1[i]>path2[k];
 	}
 	vector<int> shortestPath(int V, vector<vector<int>> &edges, int src, int dest) {
@@ -55,7 +55,7 @@ class Solution {
 					q.push({dis[nbd], nbd});
 					parent[nbd] = node;
 				}
-				if (dis[nbd] == dis[node]+wgt) {
+				else if (dis[nbd] == dis[node]+wgt) {
 					// src to nbd old_path
 					// src to node new_path
 					if (isLexSmaller(parent, nbd, node)) {
